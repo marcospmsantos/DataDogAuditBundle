@@ -477,14 +477,15 @@ class AuditSubscriber implements EventSubscriber
             return $this->assoc($em, $this->blameUser);
         }
         $token = $this->securityTokenStorage->getToken();
-        $impersonatorUser = $this->getImpersonatorUserFromSecurityToken($token);
+        return $this->assoc($em, $token->getUser()->getAuthUser());
+        /* $impersonatorUser = $this->getImpersonatorUserFromSecurityToken($token);
         if ($impersonatorUser instanceof UserInterface) {
             return $this->assoc($em, $impersonatorUser);
         }
         if ($token && $token->getUser() instanceof UserInterface && \method_exists($token->getUser(), 'getId')) {
             return $this->assoc($em, $token->getUser());
         }
-        return null;
+        return null; */
     }
 
     private function getImpersonatorUserFromSecurityToken($token)
